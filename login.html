@@ -2,15 +2,96 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Login | Elayon Core</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* --- ESTILO ELAYON CORE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --bg1: #dff4f6; --bg2: #eaf7e3; --card: #ffffff; --ink: #0a2a2f;
+            --muted: #4a6b70; --line: #cfe4e7; --accent: #66c7c0; --accent2: #7bd490;
+            --shadow: 0 10px 30px rgba(0,0,0,.08);
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
+            min-height: 100vh;
+            color: var(--ink);
+            padding-top: 80px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* --- MENU SUPERIOR --- */
+        .site-nav {
+            width: 100%; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            padding: 12px 0; position: fixed; top: 0; left: 0; z-index: 9999;
+        }
+        .nav-container {
+            max-width: 520px; margin: 0 auto;
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+        }
+        .nav-link {
+            text-decoration: none; color: var(--muted); font-size: 11px;
+            font-weight: 700; padding: 6px 12px; border-radius: 8px;
+            transition: 0.2s; text-transform: uppercase;
+        }
+        .nav-link.home { color: var(--accent); border: 1px solid var(--accent); }
+        .nav-link:hover { background: var(--accent); color: white; }
+
+        /* --- CONTEÚDO --- */
+        .wrap { width: 100%; max-width: 480px; padding: 20px; }
+        
+        .card {
+            background: white; padding: 40px 30px; border-radius: 24px;
+            box-shadow: var(--shadow); border: 1px solid var(--line);
+        }
+        .logo-area { text-align: center; margin-bottom: 25px; }
+        .logo-area img { width: 80px; margin-bottom: 15px; }
+        
+        h2 { font-size: 28px; text-align: center; margin-bottom: 8px; letter-spacing: -1px; }
+        .subtitle { text-align: center; color: var(--muted); font-size: 15px; margin-bottom: 30px; }
+
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 14px; }
+        input {
+            width: 100%; padding: 16px 20px; border-radius: 14px;
+            border: 2px solid var(--line); font-size: 16px; background: #fdfdfd; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); outline: none; background: #fff; box-shadow: 0 0 0 4px rgba(102, 199, 192, 0.1); }
+
+        .btn-primary {
+            width: 100%; padding: 18px; border-radius: 16px; border: none;
+            font-size: 18px; font-weight: 700; cursor: pointer; text-align: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: var(--ink); transition: 0.2s; margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(102, 199, 192, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+        .auth-footer { text-align: center; margin-top: 25px; font-size: 15px; color: var(--muted); }
+        .auth-footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
+
+        .message-box { padding: 15px; border-radius: 12px; margin-top: 20px; text-align: center; font-weight: 600; font-size: 14px; display: none; }
+        .error { background: #fff5f5; color: #c53030; border: 1px solid #ff7a7a; display: block; }
+
+    </style>
 </head>
 <body data-page="login">
-    <main class="auth-container">
-        <div class="glass-card">
+
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="https://elayon.space" class="nav-link home">www.elayon.space</a>
+            <a href="index.html" class="nav-link">Cadastrar</a>
+            <a href="contato.html" class="nav-link">Suporte</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <main class="card">
             <div class="logo-area">
-                <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Elayon Logo" width="120">
+                <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Elayon Logo">
             </div>
             
             <h2>Conectar ao Núcleo</h2>
@@ -18,12 +99,12 @@
 
             <form id="loginForm">
                 <div class="input-group">
-                    <label for="email">E-mail</label>
+                    <label for="email">E-mail Operacional</label>
                     <input type="email" id="email" placeholder="seu@email.com" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="password">Senha</label>
+                    <label for="password">Chave de Acesso (Senha)</label>
                     <input type="password" id="password" placeholder="••••••••" required>
                 </div>
 
@@ -37,31 +118,16 @@
             <div class="auth-footer">
                 <p>Não tem conta? <a href="index.html">Criar Cadastro</a></p>
             </div>
-        </div>
-    </main>
+        </main>
+
+        <footer style="margin-top: 40px; text-align: center; color: var(--muted); font-size: 12px; opacity: 0.7;">
+            <p>Elayon Core • Segurança e Privacidade</p>
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
-
-    <footer style="margin-top: 100px; padding: 40px; text-align: center; border-top: 1px solid var(--accent-dim); color: var(--accent-dim); font-size: 14px; opacity: 0.8; transition: opacity 1s ease-in-out;">
-        <div class="footer-nav" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
-            <a href="https://elayon.space" style="color: var(--accent); text-decoration: none;">Início</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/" style="color: var(--accent); text-decoration: none;">Cadastro</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html" style="color: var(--accent); text-decoration: none;">Login</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/painel.html" style="color: var(--accent); text-decoration: none;">Painel</a>
-            <a href="https://elayon.space/contato" style="color: var(--accent); text-decoration: none;">Contato</a>
-        </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const footer = document.querySelector('footer');
-            if (footer) {
-                // Pequeno delay para a página carregar e o rodapé aparecer suavemente
-                setTimeout(() => { footer.style.opacity = '1'; }, 1000);
-            }
-        });
-    </script>
 
 </body>
 </html>
