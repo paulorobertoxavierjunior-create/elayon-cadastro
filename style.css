@@ -1,0 +1,108 @@
+:root {
+    --bg-dark: #0a0e14;
+    --panel-bg: rgba(20, 26, 35, 0.8);
+    --accent: #00f2ff;
+    --accent-dim: #008a94;
+    --text-main: #e0e6ed;
+    --text-dim: #94a3b8;
+    --error: #ff4444;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: 
+        linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.app-shell {
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent-dim);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: var(--accent);
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    margin-top: 10px;
+}
+
+#signupMessage, #loginMessage {
+    font-size: 0.85rem;
+    margin-top: 15px;
+    min-height: 1.2em;
+}
