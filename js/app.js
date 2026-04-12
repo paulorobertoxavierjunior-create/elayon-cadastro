@@ -77,23 +77,45 @@ const { data, error } = await supabase.auth.signUp({
     };
 }
 
-    // --- LOGIN ---
-    if (page === "login") {
-        document.getElementById("loginForm").onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("loginEmail").value;
-            const password = document.getElementById("loginPassword").value;
 
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+// --- LÓGICA DE LOGIN ---
+const loginForm = document.getElementById('loginForm');
+
+if (loginForm) {
+    loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const loginBtn = document.getElementById('loginBtn');
+        const messageDiv = document.getElementById('message');
+
+        loginBtn.disabled = true;
+        loginBtn.innerText = "Autenticando...";
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            messageDiv.innerText = "Erro: " + error.message;
+            messageDiv.style.color = "#ff4b2b";
+            loginBtn.disabled = false;
+            loginBtn.innerText = "Entrar no Sistema";
+        } else {
+            messageDiv.innerText = "Acesso autorizado! Redirecionando...";
+            messageDiv.style.color = "#00ff41";
             
-            if (error) {
-                notify("loginMessage", "Dados incorretos ou e-mail não confirmado.", true);
-            } else {
-                // Vai para o painel configurado no config.js
-                window.location.href = cfg.routes.painel;
-            }
-        };
-    }
+            // Pequeno delay para o usuário ler a mensagem
+            setTimeout(() => {
+                window.location.href = "painel.html";
+            }, 1500);
+        }
+    };
+}
+
+
 
     // Toggle Senha (Olhinho)
     document.querySelectorAll(".toggle-password").forEach(btn => {
