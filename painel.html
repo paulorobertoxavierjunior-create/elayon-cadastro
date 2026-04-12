@@ -1,33 +1,332 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle | Elayon Core</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Estilo para esconder o conteúdo até validar o acesso */
-        #protected-content { display: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel • Elayon Cadastro</title>
+  <meta name="description" content="Porta de saída do Elayon Cadastro para a central Elayon Presença.">
+  <style>
+    :root{
+      --bg:#eef6f7;
+      --card:#ffffff;
+      --ink:#173b42;
+      --muted:#5e7880;
+      --line:#dbe9ec;
+      --primary:#69bec7;
+      --primary-strong:#41aeb8;
+      --shadow:0 10px 28px rgba(14,50,56,.08);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#edf5f6 0%, #eef6f7 100%);
+      color:var(--ink);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .shell{
+      width:100%;
+      max-width:860px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    /* ÁREA 1 — TOPO */
+    .top{
+      padding:22px 22px 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .mark{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:28px;
+      line-height:1.05;
+    }
+
+    .brand-text p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 18px;
+      border-radius:12px;
+      border:1px solid transparent;
+      background:var(--primary);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      background:var(--primary-strong);
+    }
+
+    .btn.secondary{
+      background:#fff;
+      color:var(--ink);
+      border-color:var(--line);
+    }
+
+    /* ÁREA 2 — MENSAGEM CENTRAL */
+    .hero{
+      padding:36px 22px 30px;
+      text-align:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      min-height:34px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#f7fbfc;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:16px;
+    }
+
+    .title{
+      margin:0 0 16px;
+      font-size:48px;
+      line-height:1.02;
+    }
+
+    .message{
+      margin:0 auto;
+      max-width:680px;
+      font-size:28px;
+      line-height:1.45;
+      font-weight:700;
+      color:var(--ink);
+    }
+
+    .message strong{
+      display:block;
+      margin-top:12px;
+      color:var(--primary-strong);
+      font-size:34px;
+      line-height:1.15;
+    }
+
+    /* ÁREA 3 — CTA */
+    .cta{
+      padding:0 22px 34px;
+      text-align:center;
+    }
+
+    .btn-main{
+      min-width:280px;
+      min-height:58px;
+      padding:0 24px;
+      font-size:20px;
+      border-radius:16px;
+    }
+
+    .cta-note{
+      margin:14px auto 0;
+      max-width:560px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    /* ÁREA 4 — VISÃO MACRO */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+      padding:0 22px 28px;
+    }
+
+    .box{
+      background:#f7fbfc;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      text-align:left;
+    }
+
+    .box .k{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .box .v{
+      font-size:20px;
+      font-weight:700;
+      line-height:1.35;
+    }
+
+    /* ÁREA 5 — RODAPÉ */
+    .footer{
+      border-top:1px solid var(--line);
+      padding:22px;
+      text-align:center;
+      background:#fcfefe;
+    }
+
+    .footer-links{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px 18px;
+      margin-bottom:10px;
+    }
+
+    .footer-links a{
+      color:var(--ink);
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .footer p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 860px){
+      .title{font-size:38px}
+      .message{font-size:24px}
+      .message strong{font-size:30px}
+      .grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 560px){
+      .title{font-size:32px}
+      .message{font-size:22px}
+      .message strong{font-size:26px}
+      .btn-main{width:100%}
+    }
+  </style>
 </head>
-<body data-page="painel">
-    <main class="app-shell" id="protected-content" style="max-width: 1000px;">
-        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--accent-dim); padding-bottom: 20px; margin-bottom: 30px;">
-            <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" width="100" alt="Logo">
-            <button id="logoutBtn" class="btn-secondary" style="padding: 10px 20px; font-size: 12px;">Sair do Sistema</button>
-        </header>
+<body>
+  <main class="shell">
+    <section class="panel">
 
-        <h1>Acesso Liberado</h1>
-        <p style="color: var(--accent);">Bem-vindo à interface de telemetria da consciência.</p>
-        
-        <div style="background: rgba(0, 242, 255, 0.05); padding: 20px; border-radius: 12px; margin-top: 20px; text-align: left;">
-            <h3>Status do Sistema: <span style="color: #00ff41;">Online</span></h3>
-            <p>Seu cadastro foi validado com sucesso através do repositório <strong>elayon-cadastro</strong>.</p>
+      <!-- ÁREA 1 — TOPO -->
+      <div class="top">
+        <div class="brand">
+          <div class="mark">E</div>
+          <div class="brand-text">
+            <h1>Elayon Cadastro</h1>
+            <p>Porta de entrada para a central de presença</p>
+          </div>
         </div>
-    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
-    <script src="js/app.js"></script>
+        <div class="top-actions">
+          <a class="btn secondary" href="https://elayon.space">← Voltar ao site</a>
+          <button class="btn secondary" type="button">Sair</button>
+        </div>
+      </div>
+
+      <!-- ÁREA 2 — MENSAGEM CENTRAL -->
+      <div class="hero">
+        <div class="badge">Primeira escada • Rá • Paciência</div>
+        <h2 class="title">Acesso liberado</h2>
+        <p class="message">
+          Tenha paciência com você mesmo. Esse é o seu espaço e o seu tempo. Respeite-se!
+          <strong>Iniciar Simbiose</strong>
+        </p>
+      </div>
+
+      <!-- ÁREA 3 — BOTÃO CENTRAL -->
+      <div class="cta">
+        <!-- TROCAR ESTE LINK PELO PAINEL DO REPO ELAYON-PRESENCA -->
+        <a class="btn btn-main" href="https://paulorobertoxavierjunior-create.github.io/elayon-presenca/painel.html">
+          Iniciar Simbiose
+        </a>
+
+        <p class="cta-note">
+          Ao seguir, você sai do repositório de cadastro e entra na central de funcionamento do Elayon Presença.
+        </p>
+      </div>
+
+      <!-- ÁREA 4 — VISÃO MACRO -->
+      <div class="grid">
+        <div class="box">
+          <span class="k">Origem</span>
+          <div class="v">Site → Cadastro → Confirmação → Login</div>
+        </div>
+
+        <div class="box">
+          <span class="k">Destino</span>
+          <div class="v">Elayon Presença → uso das ferramentas</div>
+        </div>
+
+        <div class="box">
+          <span class="k">Sentido</span>
+          <div class="v">Entrar com mais clareza antes de agir</div>
+        </div>
+      </div>
+
+      <!-- ÁREA 5 — RODAPÉ -->
+      <div class="footer">
+        <div class="footer-links">
+          <a href="https://elayon.space">Início</a>
+          <a href="https://elayon.space/contato/">Contato</a>
+          <a href="https://elayon.space/faq/">Suporte</a>
+          <a href="https://elayon.space/termos/">Termos</a>
+          <a href="https://elayon.space/politica-privacidade/">Privacidade</a>
+        </div>
+        <p>Elayon • humanidade e tecnologia em harmonia</p>
+      </div>
+
+    </section>
+  </main>
 </body>
 </html>
