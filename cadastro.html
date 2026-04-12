@@ -29,25 +29,24 @@
             </p>
 
             <form id="signupForm">
-                <section class="grid2">
-                    <div>
-                        <label>Nome Completo</label>
-                        <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
-                    </div>
-                    <div>
-                        <label>E-mail Operacional</label>
-                        <input type="email" id="signupEmail" required placeholder="seu@email.com">
-                    </div>
+                <section class="form-field">
+                    <label>Nome Completo</label>
+                    <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
                 </section>
 
-                <section>
+                <section class="form-field">
+                    <label>E-mail Operacional</label>
+                    <input type="email" id="signupEmail" required placeholder="seu@email.com">
+                </section>
+
+                <section class="form-field">
                     <label>Chave de Acesso (Senha)</label>
                     <input type="password" id="signupPassword" required placeholder="••••••••">
                 </section>
 
-                <div class="btns">
-                    <button type="submit" class="primary">Ativar Conexão</button>
-                    <button type="button" class="ghost" onclick="window.location.href='login.html'">Já tenho conta</button>
+                <div class="btns-grid">
+                    <button type="submit" class="btn-box primary">Ativar Conexão</button>
+                    <button type="button" class="btn-box ghost" onclick="window.location.href='login.html'">Já tenho conta</button>
                 </div>
 
                 <div id="signupMessage" class="message hide"></div>
@@ -56,7 +55,6 @@
 
         <footer class="foot">
             <span>Elayon Core • Sigilo e responsabilidade técnica</span>
-            <span class="right">Sua presença foi registrada. ✨</span>
         </footer>
     </div>
 
