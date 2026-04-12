@@ -1,235 +1,123 @@
-/* MENU DE NAVEGAÇÃO SUPERIOR */
-.site-nav {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-    padding: 10px 0;
-    position: fixed; /* Fixa no topo */
-    top: 0;
-    left: 0;
-    z-index: 9999;
-}
-
-.nav-container {
-    max-width: 980px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap; /* Ajusta no celular */
-    padding: 0 15px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 8px;
-    transition: 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.nav-link:hover {
-    background: var(--bg1);
-    color: var(--ink);
-}
-
-/* Ajuste para o conteúdo não ficar escondido atrás do menu fixo */
-body {
-    padding-top: 80px !important;
-}
-
-@media (max-width: 480px) {
-    .nav-link { font-size: 11px; padding: 4px 8px; }
-    .nav-container { gap: 5px; }
-}
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cadastro | Elayon Core</title>
-    <meta name="theme-color" content="#dff4f6">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <style>
-        /* RESET E VARIÁVEIS */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        /* --- DESIGN GERAL --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         :root {
-            --bg1: #dff4f6;
-            --bg2: #eaf7e3;
-            --card: #ffffff;
-            --ink: #0a2a2f;
-            --muted: #4a6b70;
-            --line: #cfe4e7;
-            --accent: #66c7c0;
-            --accent2: #7bd490;
+            --bg1: #dff4f6; --bg2: #eaf7e3; --card: #ffffff; --ink: #0a2a2f;
+            --muted: #4a6b70; --line: #cfe4e7; --accent: #66c7c0; --accent2: #7bd490;
             --shadow: 0 10px 30px rgba(0,0,0,.08);
         }
-
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
             color: var(--ink);
+            padding-top: 70px; /* Espaço para o menu fixo não cobrir o site */
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        .wrap {
-            width: 100%;
-            max-width: 480px;
+        /* --- MENU SUPERIOR MAROTO --- */
+        .site-nav {
+            width: 100%; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            padding: 12px 0; position: fixed; top: 0; left: 0; z-index: 9999;
         }
-
-        .top {
-            display: flex; 
-            align-items: center; 
-            margin-bottom: 24px;
-            gap: 12px;
+        .nav-container {
+            max-width: 520px; margin: 0 auto;
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
         }
-
-        .logo {
-            width: 50px; 
-            height: 50px; 
-            border-radius: 12px;
-            background: #fff;
-            border: 1px solid var(--line);
-            overflow: hidden;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+        .nav-link {
+            text-decoration: none; color: var(--muted); font-size: 11px;
+            font-weight: 700; padding: 6px 10px; border-radius: 8px;
+            transition: 0.2s; text-transform: uppercase;
         }
+        .nav-link:hover { background: var(--accent); color: white; }
 
-        .logo img { width: 100%; height: 100%; object-fit: cover; }
-
-        .brand h1 { font-size: 22px; font-weight: 700; margin: 0; }
-        .brand p { font-size: 14px; color: var(--muted); margin: 0; }
-
+        /* --- CARD DE CADASTRO --- */
+        .wrap { width: 100%; max-width: 480px; padding: 20px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .logo-box { width: 45px; height: 45px; border-radius: 10px; background: #fff; border: 1px solid var(--line); overflow: hidden; }
+        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
+        
         .card {
-            background: white;
-            padding: 35px 25px;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--line);
+            background: white; padding: 30px; border-radius: 24px;
+            box-shadow: var(--shadow); border: 1px solid var(--line);
         }
+        h2 { font-size: 26px; margin-bottom: 8px; letter-spacing: -1px; }
+        .muted-text { color: var(--muted); font-size: 14px; margin-bottom: 25px; line-height: 1.4; }
 
-        h2 { font-size: 30px; margin-bottom: 10px; font-weight: 800; letter-spacing: -0.5px; }
-
-        .muted { color: var(--muted); margin-bottom: 30px; font-size: 15px; line-height: 1.5; }
-
-        .form-field { margin-bottom: 22px; }
-        label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 14px; }
-
+        .form-field { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; }
         input {
-            width: 100%;
-            padding: 16px 20px;
-            border-radius: 14px;
-            border: 2px solid var(--line);
-            font-size: 16px;
-            background: #fdfdfd;
-            transition: 0.3s;
+            width: 100%; padding: 14px 18px; border-radius: 12px;
+            border: 2px solid var(--line); font-size: 16px; background: #fdfdfd; transition: 0.3s;
         }
+        input:focus { border-color: var(--accent); outline: none; background: #fff; }
 
-        input:focus { border-color: var(--accent); outline: none; background: white; box-shadow: 0 0 0 4px rgba(102, 199, 192, 0.1); }
-
-        .btns-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 32px;
-        }
-
+        .btns-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
         .btn-box {
-            width: 100%;
-            padding: 18px;
-            border-radius: 16px;
-            border: none;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; padding: 16px; border-radius: 14px; border: none;
+            font-size: 16px; font-weight: 700; cursor: pointer; text-align: center;
+            text-decoration: none; transition: 0.2s;
         }
-
-        .primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: var(--ink);
-            box-shadow: 0 8px 20px rgba(102, 199, 192, 0.3);
-        }
-
-        .secondary {
-            background: #f0f7f7;
-            color: var(--ink);
-            border: 1px solid var(--line);
-        }
-
+        .primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--ink); }
+        .secondary { background: #f0f7f7; color: var(--ink); border: 1px solid var(--line); }
         .btn-box:hover { transform: translateY(-2px); filter: brightness(1.05); }
-        .btn-box:active { transform: translateY(0); }
 
-        .message { padding: 15px; border-radius: 12px; margin-top: 20px; text-align: center; font-weight: 600; font-size: 14px; }
-        .success { background: #e6f7ed; color: #2d7a3a; border: 1px solid #7bd490; }
-        .error { background: #fff5f5; color: #c53030; border: 1px solid #ff7a7a; }
+        .foot { text-align: center; margin: 20px 0; color: var(--muted); font-size: 11px; }
         .hide { display: none !important; }
-
-        .foot { text-align: center; margin-top: 30px; color: var(--muted); font-size: 12px; opacity: 0.8; }
     </style>
 </head>
 <body data-page="cadastro">
+
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="projeto.html" class="nav-link">Projeto</a>
+            <a href="termos.html" class="nav-link">Termos</a>
+            <a href="privacidade-dados.html" class="nav-link">Privacidade</a>
+            <a href="contato.html" class="nav-link">Contato</a>
+        </div>
+    </nav>
+
     <div class="wrap">
-        <header class="top">
-            <div class="logo">
-                <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Elayon">
+        <header class="logo-area">
+            <div class="logo-box">
+                <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Logo">
             </div>
-            <div class="brand">
-                <h1>Elayon Core</h1>
-                <p>Conexão consciente e segura</p>
+            <div>
+                <h1 style="font-size: 18px;">Elayon Core</h1>
+                <p style="font-size: 12px; color: var(--muted);">Conexão Segura</p>
             </div>
         </header>
 
         <main class="card">
             <h2>Novo Registro</h2>
-            <p class="muted">
-                Ative sua conexão com presença e clareza. Dados protegidos com sigilo técnico e criptografia.
-            </p>
+            <p class="muted-text">Ative sua conexão com presença e clareza. Dados protegidos com sigilo técnico.</p>
 
             <form id="signupForm">
-                <section class="form-field">
+                <div class="form-field">
                     <label>Nome Completo</label>
                     <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
-                </section>
-
-                <section class="form-field">
+                </div>
+                <div class="form-field">
                     <label>E-mail Operacional</label>
                     <input type="email" id="signupEmail" required placeholder="seu@email.com">
-                </section>
-
-                <section class="form-field">
-                    <label>Chave de Acesso (Senha)</label>
+                </div>
+                <div class="form-field">
+                    <label>Chave de Acesso</label>
                     <input type="password" id="signupPassword" required placeholder="••••••••">
-                </section>
+                </div>
 
                 <div class="btns-grid">
                     <button type="submit" class="btn-box primary">Ativar Conexão</button>
                     <button type="button" class="btn-box secondary" onclick="window.location.href='login.html'">Já tenho conta</button>
                 </div>
-
                 <div id="signupMessage" class="message hide"></div>
             </form>
         </main>
@@ -242,20 +130,5 @@ body {
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
-
 </body>
-
-<nav class="site-nav">
-    <div class="nav-container">
-        <a href="index.html" class="nav-link">Início</a>
-        <a href="projeto.html" class="nav-link">Projeto</a>
-        <a href="planos.html" class="nav-link">Planos</a>
-        <a href="termos.html" class="nav-link">Termos</a>
-        <a href="privacidade-dados.html" class="nav-link">Privacidade</a>
-        <a href="contato.html" class="nav-link">Contato</a>
-        <a href="faq.html" class="nav-link">FAQ</a>
-    </div>
-</nav>
-
 </html>
-
