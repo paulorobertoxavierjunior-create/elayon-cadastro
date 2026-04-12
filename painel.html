@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Painel • Elayon Core</title>
     <style>
-        /* --- DESIGN CORE ELAYON --- */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        
+
         :root {
-            --bg1: #dff4f6; --bg2: #eaf7e3; --card: #ffffff; --ink: #0a2a2f;
-            --muted: #4a6b70; --line: #cfe4e7; --accent: #66c7c0; --accent2: #7bd490;
+            --bg1: #dff4f6;
+            --bg2: #eaf7e3;
+            --card: #ffffff;
+            --ink: #0a2a2f;
+            --muted: #4a6b70;
+            --line: #cfe4e7;
+            --accent: #66c7c0;
+            --accent2: #7bd490;
             --shadow: 0 10px 30px rgba(0,0,0,.08);
         }
 
@@ -19,83 +24,189 @@
             background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
             min-height: 100vh;
             color: var(--ink);
-            padding-top: 80px; /* Espaço para o menu fixo */
-            display: flex; flex-direction: column; align-items: center;
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* --- MENU SUPERIOR (HEADER) --- */
         .header-top {
-            width: 100%; background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--line);
-            padding: 12px 20px; position: fixed; top: 0; left: 0; z-index: 1000;
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .back-site { color: var(--accent); text-decoration: none; font-weight: 700; font-size: 14px; }
-        .top-actions { display: flex; gap: 15px; }
-        .btn-top { text-decoration: none; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .back-site {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
 
-        /* --- CONTEÚDO PRINCIPAL --- */
-        .shell { width: 100%; max-width: 800px; padding: 20px; }
+        .top-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-top {
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .shell {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
 
         .panel-card {
-            background: white; border-radius: 24px; border: 1px solid var(--line);
-            box-shadow: var(--shadow); overflow: hidden;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            overflow: hidden;
         }
 
-        .hero { padding: 40px 30px; text-align: center; }
-        .badge { 
-            display: inline-block; padding: 6px 16px; border-radius: 99px; 
-            background: var(--bg1); color: var(--ink); font-size: 12px; 
-            font-weight: 700; margin-bottom: 20px; 
+        .hero {
+            padding: 40px 30px;
+            text-align: center;
         }
-        
-        .title { font-size: 32px; margin-bottom: 15px; letter-spacing: -1px; }
-        .message { font-size: 18px; color: var(--muted); line-height: 1.6; margin-bottom: 30px; }
 
-        /* --- BOTÃO DE AÇÃO PRINCIPAL --- */
-        .cta-area { padding: 0 30px 40px; text-align: center; }
-        
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 99px;
+            background: var(--bg1);
+            color: var(--ink);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .cta-area {
+            padding: 0 30px 40px;
+            text-align: center;
+        }
+
         .btn-main {
-            display: inline-block; width: 100%; max-width: 320px;
-            padding: 20px; border-radius: 16px; border: none;
-            font-size: 18px; font-weight: 700; cursor: pointer;
-            text-decoration: none; transition: 0.3s;
+            display: inline-block;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px;
+            border-radius: 16px;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: var(--ink); box-shadow: 0 8px 20px rgba(102, 199, 192, 0.3);
+            color: var(--ink);
+            box-shadow: 0 8px 20px rgba(102, 199, 192, 0.3);
         }
 
-        .btn-main:hover { transform: translateY(-3px); filter: brightness(1.05); }
-
-        /* --- GRID DE STATUS --- */
-        .status-grid { 
-            display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 15px; padding: 25px; background: #f9fdfd; border-top: 1px solid var(--line);
+        .btn-main:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
         }
 
-        .box { background: white; padding: 15px; border-radius: 14px; border: 1px solid var(--line); }
-        .box span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
-        .box p { font-size: 14px; font-weight: 700; }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 25px;
+            background: #f9fdfd;
+            border-top: 1px solid var(--line);
+        }
 
-        /* --- RODAPÉ --- */
-        .footer-full { width: 100%; background: #fff; padding: 40px 20px; margin-top: 40px; border-top: 1px solid var(--line); text-align: center; }
-        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
-        .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
-        
+        .box {
+            background: white;
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+
+        .box span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .box p {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .footer-full {
+            width: 100%;
+            background: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
         @media (max-width: 600px) {
-            .status-grid { grid-template-columns: 1fr; }
-            .title { font-size: 26px; }
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .title {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 
-<body>
+<body data-page="painel">
     <header class="header-top">
         <a href="https://elayon.space" class="back-site">← Voltar Elayon.space</a>
         <div class="top-actions">
             <a href="contato.html" class="btn-top">Suporte</a>
-            <a href="login.html" class="btn-top" style="color: #ff7a7a;">Sair</a>
+            <a href="login.html" id="btnLogoutLink" class="btn-top" style="color: #ff7a7a;">Sair</a>
         </div>
     </header>
 
@@ -106,17 +217,14 @@
 
                 <h2 class="title" id="welcomeTitle">Acesso Liberado</h2>
 
-
-<p class="message" id="userInfo" style="font-size:14px;"></p>
+                <p class="message" id="userInfo" style="font-size:14px; margin-bottom:16px;"></p>
 
                 <p class="message">
-                    Tenha paciência com você mesmo. Esse é o seu espaço e o seu tempo. Veja-se, Aceite-se e Respeite-se!
+                    Tenha paciência com você mesmo. Esse é o seu espaço e o seu tempo. Veja-se, aceite-se e respeite-se.
                 </p>
-                
+
                 <div class="cta-area">
-                    <button id="btnStart" class="btn-main">
-    Iniciar Simbiose
-</button>
+                    <button id="btnStart" class="btn-main">Iniciar Simbiose</button>
                 </div>
             </div>
 
