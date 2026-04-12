@@ -1,332 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel • Elayon Cadastro</title>
-  <meta name="description" content="Porta de saída do Elayon Cadastro para a central Elayon Presença.">
-  <style>
-    :root{
-      --bg:#eef6f7;
-      --card:#ffffff;
-      --ink:#173b42;
-      --muted:#5e7880;
-      --line:#dbe9ec;
-      --primary:#69bec7;
-      --primary-strong:#41aeb8;
-      --shadow:0 10px 28px rgba(14,50,56,.08);
-      --radius:24px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Painel • Elayon Core</title>
+    <style>
+        /* --- DESIGN CORE ELAYON --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        :root {
+            --bg1: #dff4f6; --bg2: #eaf7e3; --card: #ffffff; --ink: #0a2a2f;
+            --muted: #4a6b70; --line: #cfe4e7; --accent: #66c7c0; --accent2: #7bd490;
+            --shadow: 0 10px 30px rgba(0,0,0,.08);
+        }
 
-    *{box-sizing:border-box}
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
+            min-height: 100vh;
+            color: var(--ink);
+            padding-top: 80px; /* Espaço para o menu fixo */
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#edf5f6 0%, #eef6f7 100%);
-      color:var(--ink);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
+        /* --- MENU SUPERIOR (HEADER) --- */
+        .header-top {
+            width: 100%; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            padding: 12px 20px; position: fixed; top: 0; left: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-    .shell{
-      width:100%;
-      max-width:860px;
-    }
+        .back-site { color: var(--accent); text-decoration: none; font-weight: 700; font-size: 14px; }
+        .top-actions { display: flex; gap: 15px; }
+        .btn-top { text-decoration: none; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
 
-    .panel{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .shell { width: 100%; max-width: 800px; padding: 20px; }
 
-    /* ÁREA 1 — TOPO */
-    .top{
-      padding:22px 22px 0;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
+        .panel-card {
+            background: white; border-radius: 24px; border: 1px solid var(--line);
+            box-shadow: var(--shadow); overflow: hidden;
+        }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
+        .hero { padding: 40px 30px; text-align: center; }
+        .badge { 
+            display: inline-block; padding: 6px 16px; border-radius: 99px; 
+            background: var(--bg1); color: var(--ink); font-size: 12px; 
+            font-weight: 700; margin-bottom: 20px; 
+        }
+        
+        .title { font-size: 32px; margin-bottom: 15px; letter-spacing: -1px; }
+        .message { font-size: 18px; color: var(--muted); line-height: 1.6; margin-bottom: 30px; }
 
-    .mark{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      background:#fff;
-      border:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
-      box-shadow:var(--shadow);
-    }
+        /* --- BOTÃO DE AÇÃO PRINCIPAL --- */
+        .cta-area { padding: 0 30px 40px; text-align: center; }
+        
+        .btn-main {
+            display: inline-block; width: 100%; max-width: 320px;
+            padding: 20px; border-radius: 16px; border: none;
+            font-size: 18px; font-weight: 700; cursor: pointer;
+            text-decoration: none; transition: 0.3s;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: var(--ink); box-shadow: 0 8px 20px rgba(102, 199, 192, 0.3);
+        }
 
-    .brand-text h1{
-      margin:0;
-      font-size:28px;
-      line-height:1.05;
-    }
+        .btn-main:hover { transform: translateY(-3px); filter: brightness(1.05); }
 
-    .brand-text p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
+        /* --- GRID DE STATUS --- */
+        .status-grid { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; padding: 25px; background: #f9fdfd; border-top: 1px solid var(--line);
+        }
 
-    .top-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+        .box { background: white; padding: 15px; border-radius: 14px; border: 1px solid var(--line); }
+        .box span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+        .box p { font-size: 14px; font-weight: 700; }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:46px;
-      padding:0 18px;
-      border-radius:12px;
-      border:1px solid transparent;
-      background:var(--primary);
-      color:#fff;
-      text-decoration:none;
-      font-weight:700;
-      cursor:pointer;
-    }
-
-    .btn:hover{
-      background:var(--primary-strong);
-    }
-
-    .btn.secondary{
-      background:#fff;
-      color:var(--ink);
-      border-color:var(--line);
-    }
-
-    /* ÁREA 2 — MENSAGEM CENTRAL */
-    .hero{
-      padding:36px 22px 30px;
-      text-align:center;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      min-height:34px;
-      padding:0 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#f7fbfc;
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:16px;
-    }
-
-    .title{
-      margin:0 0 16px;
-      font-size:48px;
-      line-height:1.02;
-    }
-
-    .message{
-      margin:0 auto;
-      max-width:680px;
-      font-size:28px;
-      line-height:1.45;
-      font-weight:700;
-      color:var(--ink);
-    }
-
-    .message strong{
-      display:block;
-      margin-top:12px;
-      color:var(--primary-strong);
-      font-size:34px;
-      line-height:1.15;
-    }
-
-    /* ÁREA 3 — CTA */
-    .cta{
-      padding:0 22px 34px;
-      text-align:center;
-    }
-
-    .btn-main{
-      min-width:280px;
-      min-height:58px;
-      padding:0 24px;
-      font-size:20px;
-      border-radius:16px;
-    }
-
-    .cta-note{
-      margin:14px auto 0;
-      max-width:560px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.7;
-    }
-
-    /* ÁREA 4 — VISÃO MACRO */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:14px;
-      padding:0 22px 28px;
-    }
-
-    .box{
-      background:#f7fbfc;
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      text-align:left;
-    }
-
-    .box .k{
-      display:block;
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:8px;
-    }
-
-    .box .v{
-      font-size:20px;
-      font-weight:700;
-      line-height:1.35;
-    }
-
-    /* ÁREA 5 — RODAPÉ */
-    .footer{
-      border-top:1px solid var(--line);
-      padding:22px;
-      text-align:center;
-      background:#fcfefe;
-    }
-
-    .footer-links{
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:12px 18px;
-      margin-bottom:10px;
-    }
-
-    .footer-links a{
-      color:var(--ink);
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-    }
-
-    .footer p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    @media (max-width: 860px){
-      .title{font-size:38px}
-      .message{font-size:24px}
-      .message strong{font-size:30px}
-      .grid{grid-template-columns:1fr}
-    }
-
-    @media (max-width: 560px){
-      .title{font-size:32px}
-      .message{font-size:22px}
-      .message strong{font-size:26px}
-      .btn-main{width:100%}
-    }
-  </style>
+        /* --- RODAPÉ --- */
+        .footer-full { width: 100%; background: #fff; padding: 40px 20px; margin-top: 40px; border-top: 1px solid var(--line); text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+        
+        @media (max-width: 600px) {
+            .status-grid { grid-template-columns: 1fr; }
+            .title { font-size: 26px; }
+        }
+    </style>
 </head>
+
 <body>
-  <main class="shell">
-    <section class="panel">
-
-      <!-- ÁREA 1 — TOPO -->
-      <div class="top">
-        <div class="brand">
-          <div class="mark">E</div>
-          <div class="brand-text">
-            <h1>Elayon Cadastro</h1>
-            <p>Porta de entrada para a central de presença</p>
-          </div>
-        </div>
-
+    <header class="header-top">
+        <a href="https://elayon.space" class="back-site">← Voltar Elayon.space</a>
         <div class="top-actions">
-          <a class="btn secondary" href="https://elayon.space">← Voltar ao site</a>
-          <button class="btn secondary" type="button">Sair</button>
+            <a href="contato.html" class="btn-top">Suporte</a>
+            <a href="login.html" class="btn-top" style="color: #ff7a7a;">Sair</a>
         </div>
-      </div>
+    </header>
 
-      <!-- ÁREA 2 — MENSAGEM CENTRAL -->
-      <div class="hero">
-        <div class="badge">Primeira escada • Rá • Paciência</div>
-        <h2 class="title">Acesso liberado</h2>
-        <p class="message">
-          Tenha paciência com você mesmo. Esse é o seu espaço e o seu tempo. Respeite-se!
-          
-        </p>
-      </div>
+    <main class="shell">
+        <div class="panel-card">
+            <div class="hero">
+                <div class="badge">Primeira escada • Rá • Paciência</div>
+                <h2 class="title">Acesso Liberado</h2>
+                <p class="message">
+                    Tenha paciência com você mesmo. Esse é o seu espaço e o seu tempo. Respeite-se!
+                </p>
+                
+                <div class="cta-area">
+                    <a href="https://paulorobertoxavierjunior-create.github.io/elayon-presenca/painel.html" class="btn-main">
+                        Iniciar Simbiose
+                    </a>
+                </div>
+            </div>
 
-      <!-- ÁREA 3 — BOTÃO CENTRAL -->
-      <div class="cta">
-        <!-- TROCAR ESTE LINK PELO PAINEL DO REPO ELAYON-PRESENCA -->
-        <a class="btn btn-main" href="https://paulorobertoxavierjunior-create.github.io/elayon-presenca/painel.html">
-          Iniciar simbiose
-        </a>
-
-        <p class="cta-note">
-          Ao seguir, você sai do repositório de cadastro e entra na central de funcionamento do Elayon Presença.
-        </p>
-      </div>
-
-      <!-- ÁREA 4 — VISÃO MACRO -->
-      <div class="grid">
-        <div class="box">
-          <span class="k">Origem</span>
-          <div class="v">Site → Cadastro → Confirmação → Login</div>
+            <div class="status-grid">
+                <div class="box">
+                    <span>Origem</span>
+                    <p>Site → Core</p>
+                </div>
+                <div class="box">
+                    <span>Destino</span>
+                    <p>Elayon Presença</p>
+                </div>
+                <div class="box">
+                    <span>Sentido</span>
+                    <p>Clareza e Ação</p>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <div class="box">
-          <span class="k">Destino</span>
-          <div class="v">Elayon Presença → uso das ferramentas</div>
-        </div>
-
-        <div class="box">
-          <span class="k">Sentido</span>
-          <div class="v">Entrar com mais clareza antes de agir</div>
-        </div>
-      </div>
-
-      <!-- ÁREA 5 — RODAPÉ -->
-      <div class="footer">
+    <footer class="footer-full">
         <div class="footer-links">
-          <a href="https://elayon.space">Início</a>
-          <a href="https://elayon.space/contato/">Contato</a>
-          <a href="https://elayon.space/faq/">Suporte</a>
-          <a href="https://elayon.space/termos/">Termos</a>
-          <a href="https://elayon.space/politica-privacidade/">Privacidade</a>
+            <a href="planos.html">Planos</a>
+            <a href="termos.html">Termos</a>
+            <a href="privacidade-dados.html">Privacidade</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contato.html">Contato</a>
         </div>
-        <p>Elayon • humanidade e tecnologia em harmonia</p>
-      </div>
+        <p style="font-size: 12px; color: var(--muted);">Elayon Core • Humanidade e tecnologia em harmonia © 2026</p>
+    </footer>
 
-    </section>
-  </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
