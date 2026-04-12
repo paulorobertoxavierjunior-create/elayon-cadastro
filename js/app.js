@@ -17,6 +17,33 @@
         }
     };
 
+// --- LÓGICA DE ACESSO E PROTEÇÃO ---
+const checkSession = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (page === "painel") {
+        if (!session) {
+            // Se tentar entrar no painel sem estar logado, volta pro login
+            window.location.href = "login.html";
+        } else {
+            // Se estiver logado, mostra o conteúdo
+            document.getElementById("protected-content").style.display = "block";
+        }
+    }
+};
+
+checkSession();
+
+// Botão de Sair
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+    logoutBtn.onclick = async () => {
+        await supabase.auth.signOut();
+        window.location.href = "login.html";
+    };
+}
+
+
    // --- CADASTRO BLINDADO ---
 if (page === "cadastro") {
     document.getElementById("signupForm").onsubmit = async (e) => {
