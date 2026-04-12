@@ -1,3 +1,4 @@
+// CONFIGURAÇÃO CORE ELAYON - REPOSITÓRIO: elayon-cadastro
 window.ELAYON_CONFIG = {
     supabase: {
         url: "https://eudcjihffrfmhzmfwtlg.supabase.co",
@@ -5,6 +6,8 @@ window.ELAYON_CONFIG = {
     },
     routes: {
         login: "login.html",
-        painel: "https://paulorobertoxavierjunior-create.github.io/elayon-presenca/painel.html" // Rota externa para o outro repo
+        cadastro: "cadastro.html",
+        // URL final após o e-mail de confirmação ou login bem-sucedido
+        painel: "https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/painel.html"
     }
 };
