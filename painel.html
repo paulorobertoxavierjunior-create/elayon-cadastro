@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle | Elayon Core</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilo para esconder o conteúdo até validar o acesso */
+        #protected-content { display: none; }
+    </style>
+</head>
+<body data-page="painel">
+    <main class="app-shell" id="protected-content" style="max-width: 1000px;">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--accent-dim); padding-bottom: 20px; margin-bottom: 30px;">
+            <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" width="100" alt="Logo">
+            <button id="logoutBtn" class="btn-secondary" style="padding: 10px 20px; font-size: 12px;">Sair do Sistema</button>
+        </header>
+
+        <h1>Acesso Liberado</h1>
+        <p style="color: var(--accent);">Bem-vindo à interface de telemetria da consciência.</p>
+        
+        <div style="background: rgba(0, 242, 255, 0.05); padding: 20px; border-radius: 12px; margin-top: 20px; text-align: left;">
+            <h3>Status do Sistema: <span style="color: #00ff41;">Online</span></h3>
+            <p>Seu cadastro foi validado com sucesso através do repositório <strong>elayon-cadastro</strong>.</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
