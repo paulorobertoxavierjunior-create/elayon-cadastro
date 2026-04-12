@@ -12,6 +12,28 @@
         <p style="color: var(--accent);">Verifique sua caixa de entrada (e o spam) para liberar o acesso ao painel.</p>
         <br>
 
+    <footer style="margin-top: 100px; padding: 40px; text-align: center; border-top: 1px solid var(--accent-dim); color: var(--accent-dim); font-size: 14px; opacity: 0.8; transition: opacity 1s ease-in-out;">
+        <div class="footer-nav" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px;">
+            <a href="https://elayon.space" style="color: var(--accent); text-decoration: none;">Início</a>
+            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/" style="color: var(--accent); text-decoration: none;">Cadastro</a>
+            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html" style="color: var(--accent); text-decoration: none;">Login</a>
+            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/painel.html" style="color: var(--accent); text-decoration: none;">Painel</a>
+            <a href="https://elayon.space/contato" style="color: var(--accent); text-decoration: none;">Contato</a>
+        </div>
+        
+       
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const footer = document.querySelector('footer');
+            if (footer) {
+                // Pequeno delay para a página carregar e o rodapé aparecer suavemente
+                setTimeout(() => { footer.style.opacity = '1'; }, 1000);
+            }
+        });
+    </script>
+
 
         <a href="login.html" class="btn-primary">Ir para o Login</a>
 
