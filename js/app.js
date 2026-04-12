@@ -28,14 +28,15 @@ if (page === "cadastro") {
         // Criamos a URL de redirecionamento completa manualmente para não ter erro
         const redeirectUrl = "https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html";
 
-        const { data, error } = await supabase.auth.signUp({
-            email, 
-            password, 
-            options: { 
-                data: { nome }, 
-                emailRedirectTo: redeirectUrl 
-            }
-        });
+const { data, error } = await supabase.auth.signUp({
+    email, 
+    password, 
+    options: { 
+        data: { nome }, 
+        // Forçamos o caminho completo do novo repositório
+        emailRedirectTo: "https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html"
+    }
+});
 
         if (error) {
             console.error("Erro Supabase:", error.message);
