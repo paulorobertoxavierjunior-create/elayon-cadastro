@@ -17,32 +17,37 @@
         }
     };
 
-    // --- CADASTRO ---
-    if (page === "cadastro") {
-        document.getElementById("signupForm").onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("signupEmail").value;
-            const password = document.getElementById("signupPassword").value;
-            const nome = document.getElementById("signupName").value;
+   // --- CADASTRO BLINDADO ---
+if (page === "cadastro") {
+    document.getElementById("signupForm").onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("signupEmail").value;
+        const password = document.getElementById("signupPassword").value;
+        const nome = document.getElementById("signupName").value;
 
-            // Ajuste aqui: Usando a URL de login do config para o redirecionamento do e-mail
-            const { error } = await supabase.auth.signUp({
-                email, 
-                password, 
-                options: { 
-                    data: { nome }, 
-                    emailRedirectTo: window.location.origin + "/elayon-cadastro/login.html" 
-                }
-            });
+        // Criamos a URL de redirecionamento completa manualmente para não ter erro
+        const redeirectUrl = "https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html";
 
-            if (error) {
-                notify("signupMessage", "Erro: " + error.message, true);
-            } else {
-                // Redireciona para a página de agradecimento/instruções
-                window.location.href = "obrigado.html";
+        const { data, error } = await supabase.auth.signUp({
+            email, 
+            password, 
+            options: { 
+                data: { nome }, 
+                emailRedirectTo: redeirectUrl 
             }
-        };
-    }
+        });
+
+        if (error) {
+            console.error("Erro Supabase:", error.message);
+            notify("signupMessage", "Erro: " + error.message, true);
+        } else {
+            console.log("Sucesso:", data);
+            // Se o usuário foi criado mas precisa confirmar e-mail:
+            notify("signupMessage", "Verifique seu e-mail para confirmar!", false);
+            setTimeout(() => { window.location.href = "obrigado.html"; }, 2000);
+        }
+    };
+}
 
     // --- LOGIN ---
     if (page === "login") {
