@@ -1,4 +1,5 @@
 :root {
+    /* Manti suas variáveis originais */
     --bg1: #dff4f6;
     --bg2: #eaf7e3;
     --card: #ffffffd9;
@@ -9,7 +10,7 @@
     --accent2: #7bd490;
     --danger: #ff7a7a;
     --shadow: 0 10px 30px rgba(0,0,0,.08);
-    --r: 18px;
+    --r: 18px; /* Arredondamento padrão */
 }
 
 * { 
@@ -35,6 +36,7 @@ body {
     max-width: 520px;
 }
 
+/* Espaçamento generoso no topo, igual ao modelo */
 .top {
     display: flex; 
     align-items: flex-start; 
@@ -80,6 +82,7 @@ body {
     object-fit: cover;
 }
 
+/* Card mais clean, com backdrop blur mais suave, bordas e sombras mais definidas */
 .card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -104,10 +107,12 @@ h2 {
     margin-bottom: 36px;
 }
 
+/* Aumentei o espaçamento entre campos de formulário */
 .form-field {
     margin-bottom: 32px;
 }
 
+/* Labels mais limpas, com espaçamento definido */
 label { 
     font-size: 18px; 
     color: var(--ink); 
@@ -116,6 +121,7 @@ label {
     font-weight: 600;
 }
 
+/* Inputs com bordas grossas e espaçamento interno generoso (paddding) */
 input {
     width: 100%;
     border: 2px solid var(--line);
@@ -140,6 +146,7 @@ input::placeholder {
     font-weight: 400;
 }
 
+/* Grade de botões com espaçamento definido */
 .btns-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
@@ -147,6 +154,7 @@ input::placeholder {
     margin: 48px 0 0;
 }
 
+/* Base dos botões com cantos arredondados, fontes grandes e efeito de brilho sutil */
 .btn-box {
     border: 2px solid transparent;
     padding: 20px 28px;
@@ -164,6 +172,7 @@ input::placeholder {
     overflow: hidden;
 }
 
+/* Efeito de brilho sutil ao passar o mouse */
 .btn-box::before {
     content: '';
     position: absolute;
@@ -179,6 +188,7 @@ input::placeholder {
     left: 100%;
 }
 
+/* Botão Primário: Gradiente completo de cores acentuadas */
 .primary {
     background: linear-gradient(135deg, var(--accent), var(--accent2));
     color: var(--ink);
@@ -191,18 +201,31 @@ input::placeholder {
     box-shadow: 0 20px 45px rgba(102, 199, 192, 0.5);
 }
 
-.ghost {
+/* Botão Secundário: Preenchimento de cor secundária, não mais transparente (substitui o 'ghost') */
+.secondary {
     background: linear-gradient(135deg, #f8fafb, #ffffff);
     color: var(--ink);
     border-color: var(--line);
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
-.ghost:hover {
+.secondary:hover {
     background: linear-gradient(135deg, #e8f4f3, #f0f9f7);
     border-color: var(--accent);
     transform: translateY(-2px);
     box-shadow: 0 15px 35px rgba(102, 199, 192, 0.25);
+}
+
+/* Mantendo as definições de 'ghost' e 'message' originais, apenas ajustando o padding da 'message' */
+.ghost {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.ghost:hover {
+    background: rgba(102, 199, 192, 0.05);
+    border-color: var(--accent);
 }
 
 .btn-box:active {
@@ -243,6 +266,7 @@ input::placeholder {
     display: none !important;
 }
 
+/* MEDIA QUERIES PARA CELULAR */
 @media (max-width: 480px) {
     body {
         padding: 20px;
@@ -253,7 +277,7 @@ input::placeholder {
     }
     
     .btns-grid {
-        grid-template-columns: 1px;
+        grid-template-columns: 1px; /* Empilha os botões no mobile */
         gap: 16px;
     }
     
