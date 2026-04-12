@@ -1,71 +1,243 @@
-// ==========================
-// SEGURANÇA + USUÁRIO
-// ==========================
+(function () {
+  const cfg = window.ELAYON_CONFIG || {};
+  const page = document.body.dataset.page || "index";
 
-function getUser() {
-  const raw = localStorage.getItem("elayon_user");
+  const supabaseUrl = cfg.supabase?.url;
+  const supabaseKey = cfg.supabase?.anonKey;
+  const storageKey = cfg.storage?.userKey || "elayon_user";
 
-  if (!raw) {
-    // BLOQUEIO TOTAL
-    window.location.href = "login.html";
-    return null;
+  if (!window.supabase || !window.supabase.createClient) {
+    console.error("SDK do Supabase não carregado.");
+    return;
   }
 
-  return JSON.parse(raw);
-}
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// ==========================
-// PREENCHER PAINEL
-// ==========================
+  function $(id) {
+    return document.getElementById(id);
+  }
 
-function preencherPainel(user) {
-  const nome = user.nome || "Usuário";
+  function setMessage(id, text, isError = false) {
+    const el = $(id);
+    if (!el) return;
+    el.textContent = text || "";
+    el.classList.remove("error");
+    if (isError) el.classList.add("error");
+    el.style.display = text ? "block" : "none";
+  }
 
-  document.getElementById("welcomeTitle").textContent =
-    `Bem-vindo, ${nome}.`;
+  function saveUserLocal(user) {
+    if (!user) return;
+    const payload = {
+      id: user.id,
+      nome: user.user_metadata?.nome || "Usuário",
+      email: user.email || ""
+    };
+    localStorage.setItem(storageKey, JSON.stringify(payload));
+  }
 
-  document.getElementById("userInfo").textContent =
-    `Sessão iniciada como ${user.email}`;
-}
+  function getUserLocal() {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey) || "null");
+    } catch {
+      return null;
+    }
+  }
 
-// ==========================
-// BOTÃO PRINCIPAL
-// ==========================
+  function clearUserLocal() {
+    localStorage.removeItem(storageKey);
+  }
 
-function iniciar() {
-  window.location.href =
-    "https://paulorobertoxavierjunior-create.github.io/elayon-presenca/index.html";
-}
+  async function getUserSafe() {
+    try {
+      const { data, error } = await supabase.auth.getUser();
 
-// ==========================
-// LOGOUT (AJUSTE)
-// ==========================
+      if (error) {
+        console.warn("Sessão inválida. Limpando.");
+        await supabase.auth.signOut();
+        clearUserLocal();
+        return null;
+      }
 
-function logout() {
-  localStorage.removeItem("elayon_user");
-  window.location.href = "login.html";
-}
+      return data?.user || null;
+    } catch (e) {
+      console.error("Erro ao verificar usuário:", e);
+      return null;
+    }
+  }
 
-// ==========================
-// START
-// ==========================
+  async function logout() {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.warn("Falha ao sair do Supabase:", e);
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const user = getUser();
+    clearUserLocal();
+    window.location.href = cfg.routes.login;
+  }
 
-  if (!user) return;
+  async function bindIndexRedirect() {
+    const user = await getUserSafe();
 
-  preencherPainel(user);
+    if (user) {
+      saveUserLocal(user);
+      window.location.href = cfg.routes.painel;
+    }
+  }
 
-  document.getElementById("btnStart")
-    .addEventListener("click", iniciar);
+  async function bindCadastro() {
+    const form = $("signupForm");
+    if (!form) return;
 
-  // botão sair do header
-  const sairBtn = document.querySelector('[href="login.html"]');
-  if (sairBtn) {
-    sairBtn.addEventListener("click", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      logout();
+
+      const nome = $("signupName")?.value.trim();
+      const email = $("signupEmail")?.value.trim();
+      const password = $("signupPassword")?.value.trim();
+
+      if (!nome || !email || !password) {
+        setMessage("signupMessage", "Preencha todos os campos.", true);
+        return;
+      }
+
+      setMessage("signupMessage", "Ativando conexão...");
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: cfg.routes.painel,
+          data: { nome }
+        }
+      });
+
+      if (error) {
+        setMessage("signupMessage", error.message, true);
+        return;
+      }
+
+      if (data?.user) {
+        saveUserLocal(data.user);
+      }
+
+      setMessage(
+        "signupMessage",
+        "Conta criada. Verifique seu e-mail para concluir a ativação."
+      );
     });
   }
-});
+
+  async function bindLogin() {
+    const form = $("loginForm");
+    if (!form) return;
+
+    const user = await getUserSafe();
+    if (user) {
+      saveUserLocal(user);
+      window.location.href = cfg.routes.painel;
+      return;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = $("email")?.value.trim();
+      const password = $("password")?.value.trim();
+
+      if (!email || !password) {
+        setMessage("message", "Informe e-mail e senha.", true);
+        return;
+      }
+
+      setMessage("message", "Conectando ao núcleo...");
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        setMessage("message", error.message, true);
+        return;
+      }
+
+      if (data?.user) {
+        saveUserLocal(data.user);
+      }
+
+      window.location.href = cfg.routes.painel;
+    });
+  }
+
+  async function protectPainel() {
+    const user = await getUserSafe();
+
+    if (!user) {
+      clearUserLocal();
+      window.location.href = cfg.routes.login;
+      return;
+    }
+
+    saveUserLocal(user);
+    preencherPainel(user);
+    bindPainelActions();
+  }
+
+  function preencherPainel(user) {
+    const nome = user.user_metadata?.nome || "Usuário";
+    const email = user.email || "Sem e-mail";
+
+    const welcomeTitle = $("welcomeTitle");
+    const userInfo = $("userInfo");
+
+    if (welcomeTitle) {
+      welcomeTitle.textContent = `Acesso Liberado, ${nome}`;
+    }
+
+    if (userInfo) {
+      userInfo.textContent = `Sessão ativa como ${email}`;
+    }
+  }
+
+  function bindPainelActions() {
+    const sairLink = $("btnLogoutLink");
+    const startBtn = $("btnStart");
+
+    if (sairLink) {
+      sairLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        logout();
+      });
+    }
+
+    if (startBtn) {
+      startBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.href = cfg.routes.presenca;
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    if (page === "index") {
+      await bindIndexRedirect();
+      return;
+    }
+
+    if (page === "cadastro") {
+      await bindCadastro();
+      return;
+    }
+
+    if (page === "login") {
+      await bindLogin();
+      return;
+    }
+
+    if (page === "painel") {
+      await protectPainel();
+    }
+  });
+})();
