@@ -4,61 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | Elayon Core</title>
+    <meta name="theme-color" content="#dff4f6">
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body data-page="cadastro">
-    <main class="app-shell">
-        <div class="logo-container">
-            <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" width="120" alt="Elayon Logo" class="logo">
-        </div>
-        <h1 class="page-title">Novo Registro</h1>
-        <p class="subtitle">Ative sua conexão com presença e clareza.</p>
-        
-        <form id="signupForm" class="form-container">
-            <div class="form-group">
-                <label for="signupName">Nome Completo</label>
-                <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
-                <span class="input-icon">👤</span>
+    <div class="wrap">
+        <header class="top">
+            <div class="brand">
+                <div class="logo">
+                    <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Elayon" width="56">
+                </div>
+                <div>
+                    <h1>Elayon Core</h1>
+                    <p>Registro • Conexão consciente e segura</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="signupEmail">E-mail Operacional</label>
-                <input type="email" id="signupEmail" required placeholder="seu@email.com">
-                <span class="input-icon">✉️</span>
-            </div>
-            <div class="form-group">
-                <label for="signupPassword">Chave de Acesso (Senha)</label>
-                <input type="password" id="signupPassword" required>
-                <span class="input-icon">🔒</span>
-            </div>
-            <button type="submit" class="btn btn-primary">Ativar Conexão</button>
-            <div id="signupMessage" class="message"></div>
-        </form>
-        
-        <a href="login.html" class="btn btn-secondary">Já tenho conta</a>
-    </main>
+        </header>
+
+        <main class="card">
+            <h2>Novo Registro</h2>
+            <p class="muted">
+                Ative sua conexão com presença e clareza. Todos os dados são protegidos com sigilo técnico.
+                <br><b>Segurança:</b> Criptografia ponta a ponta. Você controla sua conta.
+            </p>
+
+            <form id="signupForm">
+                <section class="grid2">
+                    <div>
+                        <label>Nome Completo</label>
+                        <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
+                    </div>
+                    <div>
+                        <label>E-mail Operacional</label>
+                        <input type="email" id="signupEmail" required placeholder="seu@email.com">
+                    </div>
+                </section>
+
+                <section>
+                    <label>Chave de Acesso (Senha)</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••">
+                </section>
+
+                <div class="btns">
+                    <button type="submit" class="primary">Ativar Conexão</button>
+                    <button type="button" class="ghost" onclick="window.location.href='login.html'">Já tenho conta</button>
+                </div>
+
+                <div id="signupMessage" class="message hide"></div>
+            </form>
+        </main>
+
+        <footer class="foot">
+            <span>Elayon Core • Sigilo e responsabilidade técnica</span>
+            <span class="right">Sua presença foi registrada. ✨</span>
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
-
-    <footer class="footer">
-        <div class="footer-nav">
-            <a href="https://elayon.space">Início</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/">Cadastro</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html">Login</a>
-            <a href="https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/painel.html">Painel</a>
-            <a href="https://elayon.space/contato">Contato</a>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const footer = document.querySelector('footer');
-            if (footer) {
-                setTimeout(() => { footer.style.opacity = '1'; }, 1000);
-            }
-        });
-    </script>
 </body>
 </html>
