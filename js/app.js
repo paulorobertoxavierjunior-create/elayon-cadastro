@@ -1,5 +1,10 @@
 (function() {
     const cfg = window.ELAYON_CONFIG;
+    if (!cfg) {
+        console.error("Configuração ELAYON não encontrada!");
+        return;
+    }
+
     const supabase = window.supabase.createClient(cfg.supabase.url, cfg.supabase.anonKey);
     const page = document.body.dataset.page;
 
@@ -8,7 +13,7 @@
         const el = document.getElementById(id);
         if (el) {
             el.textContent = text;
-            el.style.color = isErr ? "#ff4444" : "#00ff41";
+            el.style.color = isErr ? "#ff4444" : "#00f2ff"; // Ciano para sucesso seguindo sua nova identidade
         }
     };
 
@@ -20,11 +25,22 @@
             const password = document.getElementById("signupPassword").value;
             const nome = document.getElementById("signupName").value;
 
+            // Ajuste aqui: Usando a URL de login do config para o redirecionamento do e-mail
             const { error } = await supabase.auth.signUp({
-                email, password, options: { data: { nome }, emailRedirectTo: window.location.origin + "/login.html" }
+                email, 
+                password, 
+                options: { 
+                    data: { nome }, 
+                    emailRedirectTo: window.location.origin + "/elayon-cadastro/login.html" 
+                }
             });
-            if (error) notify("signupMessage", error.message, true);
-            else window.location.href = "obrigado.html";
+
+            if (error) {
+                notify("signupMessage", "Erro: " + error.message, true);
+            } else {
+                // Redireciona para a página de agradecimento/instruções
+                window.location.href = "obrigado.html";
+            }
         };
     }
 
@@ -36,17 +52,25 @@
             const password = document.getElementById("loginPassword").value;
 
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) notify("loginMessage", "Dados incorretos ou e-mail não confirmado.", true);
-            else window.location.href = cfg.routes.painel;
+            
+            if (error) {
+                notify("loginMessage", "Dados incorretos ou e-mail não confirmado.", true);
+            } else {
+                // Vai para o painel configurado no config.js
+                window.location.href = cfg.routes.painel;
+            }
         };
     }
 
-    // Olho da senha
+    // Toggle Senha (Olhinho)
     document.querySelectorAll(".toggle-password").forEach(btn => {
         btn.onclick = () => {
-            const input = document.getElementById(btn.dataset.target);
-            input.type = input.type === "password" ? "text" : "password";
-            btn.textContent = input.type === "password" ? "👁" : "🙈";
+            const targetId = btn.getAttribute("data-target");
+            const input = document.getElementById(targetId);
+            if (input) {
+                input.type = input.type === "password" ? "text" : "password";
+                btn.textContent = input.type === "password" ? "👁" : "🙈";
+            }
         };
     });
 })();
