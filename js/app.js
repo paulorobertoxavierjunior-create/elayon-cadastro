@@ -79,7 +79,12 @@
       const { error } = await supabase.auth.signUp({
         email: $("signupEmail").value,
         password: $("signupPassword").value,
-        options: { data: { nome: $("signupName").value } }
+        options: { 
+  data: { nome: $("signupName").value },
+  // 👇 ESSA LINHA É A QUE FALTA 👇
+  emailRedirectTo: 'https://paulorobertoxavierjunior-create.github.io/elayon-cadastro/login.html'
+}
+
       });
       if (error) alert(error.message);
       else alert("Verifique seu e-mail para ativar a conta!");
