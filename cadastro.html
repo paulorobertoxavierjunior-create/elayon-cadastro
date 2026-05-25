@@ -1,157 +1,206 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cadastro | Elayon Core</title>
-    <style>
-        /* --- DESIGN GERAL --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        :root {
-            --bg1: #dff4f6; --bg2: #eaf7e3; --card: #ffffff; --ink: #0a2a2f;
-            --muted: #4a6b70; --line: #cfe4e7; --accent: #66c7c0; --accent2: #7bd490;
-            --shadow: 0 10px 30px rgba(0,0,0,.08);
-        }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
-            min-height: 100vh;
-            color: var(--ink);
-            padding-top: 70px; /* Espaço para o menu fixo não cobrir o site */
-            display: flex; flex-direction: column; align-items: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cadastro | Elayon Core</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    :root{
+      --bg1:#dff4f6; --bg2:#eaf7e3; --card:#fff; --ink:#0a2a2f;
+      --muted:#4a6b70; --line:#cfe4e7; --accent:#66c7c0; --accent2:#7bd490;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --ok:#1f9d70; --pro:#5d6df7;
+    }
+    body{
+      font-family:system-ui,-apple-system,sans-serif;
+      background: radial-gradient(circle at top left, var(--bg2), var(--bg1));
+      min-height:100vh; color:var(--ink); padding-top:70px;
+      display:flex; flex-direction:column; align-items:center;
+    }
 
-        /* --- MENU SUPERIOR MAROTO --- */
-        .site-nav {
-            width: 100%; background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--line);
-            padding: 12px 0; position: fixed; top: 0; left: 0; z-index: 9999;
-        }
-        .nav-container {
-            max-width: 520px; margin: 0 auto;
-            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
-        }
-        .nav-link {
-            text-decoration: none; color: var(--muted); font-size: 11px;
-            font-weight: 700; padding: 6px 10px; border-radius: 8px;
-            transition: 0.2s; text-transform: uppercase;
-        }
-        .nav-link:hover { background: var(--accent); color: white; }
+    .site-nav{
+      width:100%; background:rgba(255,255,255,.85); backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line); padding:12px 0; position:fixed; top:0; left:0; z-index:9999;
+    }
+    .nav-container{ max-width:520px; margin:0 auto; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .nav-link{
+      text-decoration:none; color:var(--muted); font-size:11px; font-weight:700;
+      padding:6px 10px; border-radius:8px; transition:.2s; text-transform:uppercase;
+    }
+    .nav-link:hover{ background:var(--accent); color:#fff; }
 
-        /* --- CARD DE CADASTRO --- */
-        .wrap { width: 100%; max-width: 480px; padding: 20px; }
-        .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        .logo-box { width: 45px; height: 45px; border-radius: 10px; background: #fff; border: 1px solid var(--line); overflow: hidden; }
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .card {
-            background: white; padding: 30px; border-radius: 24px;
-            box-shadow: var(--shadow); border: 1px solid var(--line);
-        }
-        h2 { font-size: 26px; margin-bottom: 8px; letter-spacing: -1px; }
-        .muted-text { color: var(--muted); font-size: 14px; margin-bottom: 25px; line-height: 1.4; }
+    .wrap{ width:100%; max-width:520px; padding:20px; }
+    .logo-area{ display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+    .logo-box{ width:48px; height:48px; border-radius:12px; border:1px solid var(--line); overflow:hidden; background:#fff; }
+    .logo-box img{ width:100%; height:100%; object-fit:cover; }
 
-        .form-field { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; }
-        input {
-            width: 100%; padding: 14px 18px; border-radius: 12px;
-            border: 2px solid var(--line); font-size: 16px; background: #fdfdfd; transition: 0.3s;
-        }
-        input:focus { border-color: var(--accent); outline: none; background: #fff; }
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:24px;
+      box-shadow:var(--shadow); padding:26px;
+    }
+    h2{ font-size:26px; margin-bottom:8px; letter-spacing:-.8px; }
+    .muted-text{ color:var(--muted); font-size:14px; margin-bottom:20px; line-height:1.4; }
 
-        .btns-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        .btn-box {
-            width: 100%; padding: 16px; border-radius: 14px; border: none;
-            font-size: 16px; font-weight: 700; cursor: pointer; text-align: center;
-            text-decoration: none; transition: 0.2s;
-        }
-        .primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--ink); }
-        .secondary { background: #f0f7f7; color: var(--ink); border: 1px solid var(--line); }
-        .btn-box:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .section-title{
+      font-size:12px; font-weight:800; letter-spacing:.4px; text-transform:uppercase;
+      color:var(--muted); margin:18px 0 10px;
+    }
 
-        .foot { text-align: center; margin: 20px 0; color: var(--muted); font-size: 11px; }
-        .hide { display: none !important; }
-    </style>
+    .choice-grid{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+      margin-bottom:10px;
+    }
+    .choice-btn{
+      border:1px solid var(--line); background:#f8fcfc; border-radius:12px; padding:12px;
+      text-align:left; cursor:pointer; transition:.2s; font-weight:700; color:var(--ink);
+    }
+    .choice-btn small{ display:block; color:var(--muted); font-weight:600; margin-top:4px; font-size:11px; }
+    .choice-btn.active{
+      border-color:var(--accent); background:linear-gradient(135deg,#ecfbf8,#eefcf2);
+      box-shadow:0 0 0 3px rgba(102,199,192,.15);
+    }
+
+    .form-field{ margin-bottom:14px; }
+    label{ display:block; margin-bottom:6px; font-size:13px; font-weight:700; }
+    input{
+      width:100%; padding:14px 16px; border:2px solid var(--line); border-radius:12px;
+      font-size:16px; background:#fdfdfd; transition:.2s;
+    }
+    input:focus{ border-color:var(--accent); outline:none; background:#fff; }
+
+    .btns-grid{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+    .btn-box{
+      width:100%; padding:15px; border:none; border-radius:12px; cursor:pointer;
+      font-size:15px; font-weight:800; transition:.2s;
+    }
+    .primary{ background:linear-gradient(135deg,var(--accent),var(--accent2)); color:var(--ink); }
+    .secondary{ background:#f2f7f8; color:var(--ink); border:1px solid var(--line); }
+    .pro{ background:linear-gradient(135deg,#e8ebff,#dfe4ff); color:#223; border:1px solid #c8d0ff; }
+    .btn-box:hover{ transform:translateY(-2px); filter:brightness(1.02); }
+
+    .foot{ text-align:center; margin:16px 0; color:var(--muted); font-size:11px; }
+    .hide{ display:none !important; }
+
+    .dev-box{ margin-top:14px; border:1px dashed var(--line); border-radius:12px; padding:10px; background:#fbfefe; }
+    .dev-title{ font-size:12px; font-weight:700; color:var(--muted); margin-bottom:8px; }
+    #logTech{
+      margin-top:8px; background:#000; color:#0f0; padding:10px; border-radius:10px;
+      max-height:180px; overflow:auto; font-size:11px;
+    }
+  </style>
 </head>
 <body data-page="cadastro">
 
-    <nav class="site-nav">
-        <div class="nav-container">
-            <a href="projeto.html" class="nav-link">Projeto</a>
-            <a href="termos.html" class="nav-link">Termos</a>
-            <a href="privacidade-dados.html" class="nav-link">Privacidade</a>
-            <a href="contato.html" class="nav-link">Contato</a>
+  <nav class="site-nav">
+    <div class="nav-container">
+      <a href="projeto.html" class="nav-link">Projeto</a>
+      <a href="termos.html" class="nav-link">Termos</a>
+      <a href="privacidade-dados.html" class="nav-link">Privacidade</a>
+      <a href="contato.html" class="nav-link">Contato</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="logo-area">
+      <div class="logo-box">
+        <!-- recomenda-se copiar a logo para assets/img/logos/elayon_logo.png -->
+        <img src="assets/img/logos/elayon_logo.png" alt="Logo Elayon" />
+      </div>
+      <div>
+        <h1 style="font-size:18px;">Elayon Core</h1>
+        <p style="font-size:12px; color:var(--muted);">Conexão Segura</p>
+      </div>
+    </header>
+
+    <main class="card">
+      <h2>Novo Registro</h2>
+      <p class="muted-text">Escolha seu perfil de acesso e ative sua conexão.</p>
+
+      <form id="signupForm">
+        <p class="section-title">Tipo de conta</p>
+        <div class="choice-grid">
+          <button type="button" class="choice-btn active" data-type="usuario">
+            Usuário
+            <small>Uso pessoal</small>
+          </button>
+          <button type="button" class="choice-btn" data-type="piloto">
+            Piloto
+            <small>Pessoal + conexão com sistemas maiores</small>
+          </button>
+          <button type="button" class="choice-btn" data-type="profissional">
+            Profissional
+            <small>Painel técnico dedicado</small>
+          </button>
+          <button type="button" class="choice-btn" data-type="empresa">
+            Empresa
+            <small>Gestão institucional</small>
+          </button>
         </div>
-    </nav>
 
-    <div class="wrap">
-        <header class="logo-area">
-            <div class="logo-box">
-                <img src="https://elayon.space/wp-content/uploads/2026/04/elayon_logo.png" alt="Logo">
-            </div>
-            <div>
-                <h1 style="font-size: 18px;">Elayon Core</h1>
-                <p style="font-size: 12px; color: var(--muted);">Conexão Segura</p>
-            </div>
-        </header>
+        <input type="hidden" id="signupRole" value="usuario" />
 
-        <main class="card">
-            <h2>Novo Registro</h2>
-            <p class="muted-text">Ative sua conexão com presença e clareza. Dados protegidos com sigilo técnico.</p>
+        <div class="form-field">
+          <label for="signupName">Nome Completo</label>
+          <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto" />
+        </div>
+        <div class="form-field">
+          <label for="signupEmail">E-mail Operacional</label>
+          <input type="email" id="signupEmail" required placeholder="seu@email.com" />
+        </div>
+        <div class="form-field">
+          <label for="signupPassword">Chave de Acesso</label>
+          <input type="password" id="signupPassword" required placeholder="••••••••" minlength="6" />
+        </div>
 
-            <form id="signupForm">
-                <div class="form-field">
-                    <label>Nome Completo</label>
-                    <input type="text" id="signupName" required placeholder="Ex: Paulo Roberto">
-                </div>
-                <div class="form-field">
-                    <label>E-mail Operacional</label>
-                    <input type="email" id="signupEmail" required placeholder="seu@email.com">
-                </div>
-                <div class="form-field">
-                    <label>Chave de Acesso</label>
-                    <input type="password" id="signupPassword" required placeholder="••••••••">
-                </div>
+        <div class="btns-grid">
+          <button type="submit" class="btn-box primary" id="btnCriarConta">Ativar Conexão Pessoal</button>
+          <button type="button" class="btn-box secondary" onclick="window.location.href='login-pessoal.html'">Já tenho conta pessoal</button>
+          <button type="button" class="btn-box pro" onclick="window.location.href='login-profissional.html'">Acessar ferramenta profissional</button>
+        </div>
 
-                <div class="btns-grid">
-                    <button type="submit" class="btn-box primary">Ativar Conexão</button>
-                    <button type="button" class="btn-box secondary" onclick="window.location.href='login.html'">Já tenho conta</button>
-                </div>
-                <div id="signupMessage" class="message hide"></div>
-            </form>
-        </main>
+        <div id="signupMessage" class="hide"></div>
+      </form>
 
-        <footer class="foot">
-            <span>Elayon Core • Sigilo e responsabilidade técnica</span>
-        </footer>
-    <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
-  
-  <button id="btnTestarTunnel" class="btn-box secondary">
-    Rodar Diagnóstico do Sistema
-  </button>
+      <div class="dev-box">
+        <p class="dev-title">Diagnóstico técnico</p>
+        <button id="btnTestarTunnel" class="btn-box secondary" type="button">Rodar Diagnóstico</button>
+        <button id="btnResetLog" class="btn-box secondary" type="button" style="margin-top:8px;">Limpar Log</button>
+        <pre id="logTech"></pre>
+      </div>
+    </main>
 
-  <button id="btnResetLog" class="btn-box secondary">
-    Limpar Log
-  </button>
+    <footer class="foot">Elayon Core • Sigilo e responsabilidade técnica</footer>
+  </div>
 
-</div>
+  <script>
+    (function(){
+      const roleInput = document.getElementById('signupRole');
+      const buttons = document.querySelectorAll('.choice-btn');
+      const submitBtn = document.getElementById('btnCriarConta');
 
-<pre id="logTech" style="
-  margin-top:10px;
-  background:#000;
-  color:#0f0;
-  padding:12px;
-  border-radius:10px;
-  max-height:220px;
-  overflow:auto;
-  font-size:11px;
-"></pre>
+      function updateLabel(role){
+        if(role === 'profissional') submitBtn.textContent = 'Ativar Conta Profissional';
+        else if(role === 'empresa') submitBtn.textContent = 'Ativar Conta Institucional';
+        else if(role === 'piloto') submitBtn.textContent = 'Ativar Conexão do Piloto';
+        else submitBtn.textContent = 'Ativar Conexão Pessoal';
+      }
 
-<script src="js/config.js"></script>
-<script src="js/app.js"></script>
-<script src="js/tunnel.js"></script>
-<script src="js/teste-runner.js"></script>
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const role = btn.dataset.type;
+          roleInput.value = role;
+          updateLabel(role);
+        });
+      });
+    })();
+  </script>
 
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/tunnel.js"></script>
+  <script src="js/teste-runner.js"></script>
 </body>
 </html>
